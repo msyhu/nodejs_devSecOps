@@ -97,14 +97,14 @@ pipeline {
             }
         }
 
-        stage('dependency-check') {
-          steps {
-            sh 'rm owasp* || true'
-            sh "wget 'https://raw.githubusercontent.com/msyhu/nodejs_devSecOps/master/owasp-dependency-check.sh'"
-            sh 'chmod +x owasp-dependency-check.sh'
-            sh 'bash owasp-dependency-check.sh'
-          }
-        }
+        // stage('dependency-check') {
+        //   steps {
+        //     sh 'rm owasp* || true'
+        //     sh "wget 'https://raw.githubusercontent.com/msyhu/nodejs_devSecOps/master/owasp-dependency-check.sh'"
+        //     sh 'chmod +x owasp-dependency-check.sh'
+        //     sh 'bash owasp-dependency-check.sh'
+        //   }
+        // }
 
         stage('Test Backend') {
           agent {
