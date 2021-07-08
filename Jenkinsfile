@@ -79,15 +79,6 @@ pipeline {
           }
         }
 
-        stage('dependency-check') {
-          steps {
-            sh 'rm owasp* || true'
-            sh "wget 'https://raw.githubusercontent.com/msyhu/nodejs_devSecOps/master/owasp-dependency-check.sh'"
-            sh 'chmod +x owasp-dependency-check.sh'
-            sh 'bash owasp-dependency-check.sh'
-          }
-        }
-        
         stage('Lint Backend') {
             // Docker plugin and Docker Pipeline 두개를 깔아야 사용가능!
             agent {
@@ -106,21 +97,15 @@ pipeline {
             }
         }
 
-        // stage('Dependency Check') {
-        //     steps {
-        //       dir ('./server'){
-        //           sh 'npm install'
-        //           sh ''
-        //       }
-        //     }
+        stage('dependency-check') {
+          steps {
+            sh 'rm owasp* || true'
+            sh "wget 'https://raw.githubusercontent.com/msyhu/nodejs_devSecOps/master/owasp-dependency-check.sh'"
+            sh 'chmod +x owasp-dependency-check.sh'
+            sh 'bash owasp-dependency-check.sh'
+          }
+        }
 
-        //     post {
-        //     failure {
-        //       error 'This pipeline stops at dependency-check...'
-        //     }
-        //   }
-        // }
-        
         stage('Test Backend') {
           agent {
             docker {
