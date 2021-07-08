@@ -96,6 +96,21 @@ pipeline {
               }
             }
         }
+
+        // stage('Dependency Check') {
+        //     steps {
+        //       dir ('./server'){
+        //           sh 'npm install'
+        //           sh ''
+        //       }
+        //     }
+
+        //     post {
+        //     failure {
+        //       error 'This pipeline stops at dependency-check...'
+        //     }
+        //   }
+        // }
         
         stage('Test Backend') {
           agent {
@@ -115,14 +130,14 @@ pipeline {
           }
         }
         
-        stage('Bulid Backend') {
+        stage('Bulid Backend') { 
           agent any
           steps {
             echo 'Build Backend'
 
             dir ('./server'){
                 sh """
-                docker build . -t server --build-arg env=${PROD}
+                docker build . -t server
                 """
             }
           }
@@ -140,9 +155,9 @@ pipeline {
           steps {
             echo 'Build Backend'
 
-// docker rm -f $(docker ps -aq)
             dir ('./server'){
                 sh '''
+                docker rm -f $(docker ps -aq)
                 docker run -p 80:80 -d server
                 '''
             }
